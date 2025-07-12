@@ -1,0 +1,13 @@
+[project]
+name = "mcp-server"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "httpx>=0.28.1",
+    "ipykernel>=6.29.5",
+    "mcp[cli]>=1.11.0",
+    "openai>=1.95.1",
+    "python-dotenv>=1.1.1",
+]
