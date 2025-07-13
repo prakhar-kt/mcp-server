@@ -10,42 +10,50 @@ mcp = FastMCP(
     description="A simple calculator that can perform basic arithmetic operations.",
     version="1.0.0",
     author="PS",
-    host="0.0.0.0", # For SSE tranport only (locahost)
+    host="0.0.0.0",  # For SSE tranport only (locahost)
     port=8100,
 )
 
-#Add a simple calculator tool to the MCP server
+
+# Add a simple calculator tool to the MCP server
 @mcp.tool()
 def add(x: float, y: float) -> float:
     """Adds two numbers."""
     return x + y
+
 
 @mcp.tool()
 def subtract(x: float, y: float) -> float:
     """Subtracts two numbers."""
     return x - y
 
+
 @mcp.tool()
 def multiply(x: float, y: float) -> float:
     """Multiplies two numbers."""
-    return x * y    
+    return x * y
+
 
 @mcp.tool()
 def divide(x: float, y: float) -> float:
     """Divides two numbers."""
     if y == 0:
         raise ValueError("Cannot divide by zero.")
-    return x / y    
+    return x / y
+
 
 # Run the MCP server
 if __name__ == "__main__":
-    
-    transport: Literal['stdio', 'sse', 'streamable-http'] = "sse"  
+
+    transport: Literal["stdio", "sse", "streamable-http"] = "streamable-http"
     if transport == "stdio":
         print("Starting MCP server with stdio transport...")
         mcp.run(transport="stdio")
     elif transport == "sse":
         print("Starting MCP server with SSE transport...")
         mcp.run(transport="sse")
+    elif transport == "streamable-http":
+        print("Running server with Streamable HTTP transport")
+        mcp.run(transport="streamable-http")
     else:
         raise ValueError("Unsupported transport type. Use 'stdio' or 'sse'.")
