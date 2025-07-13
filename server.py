@@ -1,5 +1,6 @@
 from mcp.server.fastmcp import FastMCP
 from dotenv import load_dotenv
+from typing import Literal
 
 load_dotenv(".env")
 
@@ -11,7 +12,7 @@ mcp = FastMCP(
     author="PS",
     host="0.0.0.0", # For SSE tranport only (locahost)
     port=8100,
-),
+)
 
 #Add a simple calculator tool to the MCP server
 @mcp.tool()
@@ -38,12 +39,13 @@ def divide(x: float, y: float) -> float:
 
 # Run the MCP server
 if __name__ == "__main__":
-    transport = "stdio"  # Change to "sse" for SSE transport
+    
+    transport: Literal['stdio', 'sse', 'streamable-http'] = "sse"  
     if transport == "stdio":
         print("Starting MCP server with stdio transport...")
-        mcp.run(transport=transport)
+        mcp.run(transport="stdio")
     elif transport == "sse":
         print("Starting MCP server with SSE transport...")
-        mcp.run(transport=transport, host="0.0.0.0", port=8100)
+        mcp.run(transport="sse")
     else:
         raise ValueError("Unsupported transport type. Use 'stdio' or 'sse'.")
